@@ -51,7 +51,7 @@ third_apps = [
 ]
 
 local_apps =[
-
+    "accounts",
 ]
 
 INSTALLED_APPS = [
@@ -111,7 +111,7 @@ DATABASES = {"default": env.db(default=DEFAULT_DATABASE_URL),}
 
 
 # accounts
-# AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
