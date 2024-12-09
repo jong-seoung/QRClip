@@ -1,7 +1,7 @@
 from django.contrib.auth.models import update_last_login
 
 from rest_framework import serializers
-from accounts.models import User
+from accounts.models import User, Profile
 
 
 class SignupSerializer(serializers.ModelSerializer):
@@ -31,4 +31,10 @@ class LoginSerializer(serializers.Serializer):
                 raise serializers.ValidationError("회원 정보가 잘못되었습니다.")
         except User.DoesNotExist:
             raise serializers.ValidationError("회원 정보가 잘못되었습니다.")
-    
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Profile
+        fields="__all__"
+        read_only_fields = ['user']
