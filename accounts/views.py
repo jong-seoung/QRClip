@@ -9,6 +9,7 @@ from rest_framework.exceptions import NotFound
 
 from accounts.serializers import SignupSerializer, LoginSerializer, ProfileSerializer
 from accounts.models import Profile
+from accounts.permissions import IsOwnerProfile
 
 
 class SignupView(APIView):
@@ -39,11 +40,13 @@ class LogoutView(APIView):
 
 
 class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerProfile]
 
     def get_object(self):
         try:
-            return Profile.objects.get(user=self.request.user)
+            profile =  Profile.objects.get(user=self.request.user)
+            self.check_object_permissions(self.request, profile)
+            return profile
         except Profile.DoesNotExist:
             raise NotFound({"detail": "Profile not found."})
         
