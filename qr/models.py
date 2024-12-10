@@ -21,3 +21,8 @@ class QRCode(TimeStampModel):
         super().save(*args, **kwargs)
         
 
+class SaveQRCode(TimeStampModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='saved_qrcodes')
+    qrcode = models.ForeignKey(QRCode, on_delete=models.CASCADE, related_name='saved_by_users')
+    name = models.CharField(max_length=100)
+
